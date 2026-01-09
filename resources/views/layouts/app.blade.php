@@ -28,6 +28,7 @@
         </div>
 
         <div class="flex space-x-4">
+            <a href="{{ route('privacy') }}" class="text-gray-600 hover:text-gray-900">Vie privée</a>
             @auth
                 <span>{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}">
@@ -47,6 +48,9 @@
 <main class="max-w-7xl mx-auto px-4">
     @yield('content')
 </main>
+
+{{-- Bandeau cookies RGPD --}}
+<x-cookie-banner />
 
 </body>
 </html>

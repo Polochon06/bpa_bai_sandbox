@@ -5,6 +5,8 @@ use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\CookieConsentController;
+use App\Http\Controllers\PrivacyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,20 @@ Route::middleware(['auth'])->group(function () {
 // ------------- Intentional Open Redirect Vulnerability -------------
 Route::get('/redirect', [RedirectController::class, 'vulnerableRedirect'])
     ->name('redirect.vulnerable');
+
+// ------------- RGPD Routes -------------
+// Enregistrer le consentement cookies
+Route::post('/cookie-consent', [CookieConsentController::class, 'store'])
+    ->name('cookie.consent');
+
+// Retirer le consentement
+Route::delete('/cookie-consent', [CookieConsentController::class, 'withdraw'])
+    ->name('cookie.withdraw')
+    ->middleware('auth');
+
+// Page vie privée / politique de confidentialité
+Route::get('/privacy', [PrivacyController::class, 'index'])
+    ->name('privacy');
 
 // ------------- Authentication routes from Breeze -------------
 require __DIR__.'/auth.php';
